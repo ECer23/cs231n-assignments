@@ -1,6 +1,6 @@
 # cs231n.assignments
 
-My solutions and explanations for [Stanford CS231n course](http://cs231n.stanford.edu/) assignments.
+My solutions and explanations for [Stanford CS231n course](http://cs231n.stanford.edu/) assignments. Details like assignments description, enviroment setup of each assignment could be seen in [CS231n GitHub Pages](http://cs231n.github.io/).
 
 ## Logs
 
