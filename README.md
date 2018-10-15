@@ -2,11 +2,7 @@
 
 My solutions and explanations for [Stanford CS231n course](http://cs231n.stanford.edu/) assignments. Details like assignments description, enviroment setup of each assignment could be seen in [CS231n GitHub Pages](http://cs231n.github.io/).
 
-## Logs
-
-Details could be seen in issue [#1](https://github.com/ECer23/cs231n.assignments/issues)
-
-* 2018/10/13 Init the repository
+You can view this repository's [Wiki](https://github.com/ECer23/cs231n.assignments/wiki) to learn more about this repository.
 
 ## Reference
 
