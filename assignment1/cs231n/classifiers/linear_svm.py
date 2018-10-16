@@ -97,7 +97,7 @@ def svm_loss_vectorized(W, X, y, reg):
   #############################################################################
 
   #############################################################################
-  # TODO:                                                                     #
+  # TODO                                                                      #
   # Implement a vectorized version of the gradient for the structured SVM     #
   # loss, storing the result in dW.                                           #
   #                                                                           #
