@@ -21,7 +21,7 @@ In this assignment you will practice putting together a simple image classificat
 - [x] ~~Q1: k-Nearest Neighbor classifier~~ 2018/10/13
 - [x] ~~Q2: Training a Support Vector Machine~~ 2018/10/15
 - [x] ~~Q3: Implement a Softmax classifier~~ 2018/10/16
-- [ ] Q4: Two-Layer Neural Network
+- [x] ~~Q4: Two-Layer Neural Network~~ 2018/10/16
 - [ ] Q5: Higher Level Representations: Image Features
 
 ### Q1: k-Nearest Neighbor classifier (20 points)

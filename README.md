@@ -4,7 +4,7 @@ My solutions and explanations for [Stanford CS231n, Spring 2018](http://cs231n.s
 
 ## Contents
 
-* [Assignment 1](https://github.com/ECer23/cs231n.assignments/tree/master/assignment1) Complete 65%
+* [Assignment 1](https://github.com/ECer23/cs231n.assignments/tree/master/assignment1) Complete 90%
 * [Assignment 2](https://github.com/ECer23/cs231n.assignments/tree/master/assignment2) Complete 0%
 * [Assignment 3](https://github.com/ECer23/cs231n.assignments/tree/master/assignment3) Complete 0%
 
