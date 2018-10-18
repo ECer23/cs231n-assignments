@@ -18,7 +18,7 @@ are as follows:
 
 ### Roadmap
 
-- [ ] Q1: Fully-connected Neural Network
+- [x] ~~Q1: Fully-connected Neural Network~~ 2018/10/18
 - [ ] Q2: Batch Normalization
 - [ ] Q3: Dropout
 - [ ] Q4: Convolutional Networks

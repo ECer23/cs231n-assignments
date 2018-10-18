@@ -5,7 +5,7 @@ My solutions and explanations for [Stanford CS231n, Spring 2018](http://cs231n.s
 ## Contents
 
 * [Assignment 1](https://github.com/ECer23/cs231n.assignments/tree/master/assignment1) Complete 100%
-* [Assignment 2](https://github.com/ECer23/cs231n.assignments/tree/master/assignment2) Complete 0%
+* [Assignment 2](https://github.com/ECer23/cs231n.assignments/tree/master/assignment2) Complete 20%
 * [Assignment 3](https://github.com/ECer23/cs231n.assignments/tree/master/assignment3) Complete 0%
 
 ## Wiki
@@ -14,3 +14,4 @@ Wiki pages of this repository are used to take notes of important ideas behind t
 
 * [0 - Introduction](https://github.com/ECer23/cs231n.assignments/wiki) Motivation and plans of publishing my implementation for CS231n's assigments.
 * [1 - Classifier](https://github.com/ECer23/cs231n.assignments/wiki/Classifier) kNN, SVM, Softmax and basic Neural Network classifier.
+* [2 - Convolutional Neural Network](https://github.com/ECer23/cs231n.assignments/wiki/Convolutional-Neural-Network) ConvNets architecture design and vectorized implementation details.

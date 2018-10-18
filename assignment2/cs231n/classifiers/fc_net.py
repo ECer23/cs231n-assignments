@@ -39,7 +39,8 @@ class TwoLayerNet(object):
         self.reg = reg
 
         ############################################################################
-        # TODO: Initialize the weights and biases of the two-layer net. Weights    #
+        # TODO                                                                     #
+        # Initialize the weights and biases of the two-layer net. Weights          #
         # should be initialized from a Gaussian centered at 0.0 with               #
         # standard deviation equal to weight_scale, and biases should be           #
         # initialized to zero. All weights and biases should be stored in the      #
@@ -47,7 +48,10 @@ class TwoLayerNet(object):
         # and biases using the keys 'W1' and 'b1' and second layer                 #
         # weights and biases using the keys 'W2' and 'b2'.                         #
         ############################################################################
-        pass
+        self.params['W1'] = weight_scale * np.random.randn(input_dim, hidden_dim)
+        self.params['b1'] = np.zeros(hidden_dim)
+        self.params['W2'] = weight_scale * np.random.randn(hidden_dim, num_classes)
+        self.params['b2'] = np.zeros(num_classes)
         ############################################################################
         #                             END OF YOUR CODE                             #
         ############################################################################
@@ -73,11 +77,15 @@ class TwoLayerNet(object):
           names to gradients of the loss with respect to those parameters.
         """
         scores = None
+        W1, b1 = self.params['W1'], self.params['b1']
+        W2, b2 = self.params['W2'], self.params['b2']
         ############################################################################
-        # TODO: Implement the forward pass for the two-layer net, computing the    #
+        # TODO                                                                     #
+        # Implement the forward pass for the two-layer net, computing the          #
         # class scores for X and storing them in the scores variable.              #
         ############################################################################
-        pass
+        out_hidden, cache_hidden = affine_relu_forward(X, W1, b1)
+        scores, cache_scores = affine_forward(out_hidden, W2, b2)
         ############################################################################
         #                             END OF YOUR CODE                             #
         ############################################################################
@@ -88,7 +96,8 @@ class TwoLayerNet(object):
 
         loss, grads = 0, {}
         ############################################################################
-        # TODO: Implement the backward pass for the two-layer net. Store the loss  #
+        # TODO                                                                     #
+        # Implement the backward pass for the two-layer net. Store the loss        #
         # in the loss variable and gradients in the grads dictionary. Compute data #
         # loss using softmax, and make sure that grads[k] holds the gradients for  #
         # self.params[k]. Don't forget to add L2 regularization!                   #
@@ -97,7 +106,15 @@ class TwoLayerNet(object):
         # automated tests, make sure that your L2 regularization includes a factor #
         # of 0.5 to simplify the expression for the gradient.                      #
         ############################################################################
-        pass
+        loss_data, dscores = softmax_loss(scores, y)
+        loss_reg = 0.5 * (self.reg * np.sum(W1 * W1) + self.reg * np.sum(W2 * W2))
+        loss = loss_data + loss_reg
+        dhidden, dW2, db2 = affine_backward(dscores, cache_scores)
+        dX, dW1, db1 = affine_relu_backward(dhidden, cache_hidden)
+        grads['W1'] = dW1 + self.reg * W1
+        grads['W2'] = dW2 + self.reg * W2
+        grads['b1'] = db1
+        grads['b2'] = db2
         ############################################################################
         #                             END OF YOUR CODE                             #
         ############################################################################
@@ -151,9 +168,11 @@ class FullyConnectedNet(object):
         self.num_layers = 1 + len(hidden_dims)
         self.dtype = dtype
         self.params = {}
+        self.channels = [input_dim] + hidden_dims + [num_classes]
 
         ############################################################################
-        # TODO: Initialize the parameters of the network, storing all values in    #
+        # TODO                                                                     #
+        # Initialize the parameters of the network, storing all values in          #
         # the self.params dictionary. Store weights and biases for the first layer #
         # in W1 and b1; for the second layer use W2 and b2, etc. Weights should be #
         # initialized from a normal distribution centered at 0 with standard       #
@@ -164,7 +183,12 @@ class FullyConnectedNet(object):
         # beta2, etc. Scale parameters should be initialized to ones and shift     #
         # parameters should be initialized to zeros.                               #
         ############################################################################
-        pass
+        for idx in range(self.num_layers):
+            idx_str = str(idx + 1)
+            in_channels = self.channels[idx]
+            out_channels = self.channels[idx + 1]
+            self.params['W' + idx_str] = weight_scale * np.random.randn(in_channels, out_channels)
+            self.params['b' + idx_str] = np.zeros(out_channels)
         ############################################################################
         #                             END OF YOUR CODE                             #
         ############################################################################
@@ -212,7 +236,8 @@ class FullyConnectedNet(object):
                 bn_param['mode'] = mode
         scores = None
         ############################################################################
-        # TODO: Implement the forward pass for the fully-connected net, computing  #
+        # TODO                                                                     #
+        # Implement the forward pass for the fully-connected net, computing        #
         # the class scores for X and storing them in the scores variable.          #
         #                                                                          #
         # When using dropout, you'll need to pass self.dropout_param to each       #
@@ -223,7 +248,17 @@ class FullyConnectedNet(object):
         # self.bn_params[1] to the forward pass for the second batch normalization #
         # layer, etc.                                                              #
         ############################################################################
-        pass
+        cache = []
+        inputs = X
+        for idx in range(self.num_layers):
+            W = self.params['W' + str(idx + 1)]
+            b = self.params['b' + str(idx + 1)]
+            if idx == self.num_layers - 1:  # output layer need no activation
+                scores, cache_layer = affine_forward(inputs, W, b)
+            else:
+                outputs, cache_layer = affine_relu_forward(inputs, W, b)
+                inputs = outputs
+            cache.append(cache_layer)
         ############################################################################
         #                             END OF YOUR CODE                             #
         ############################################################################
@@ -234,19 +269,29 @@ class FullyConnectedNet(object):
 
         loss, grads = 0.0, {}
         ############################################################################
-        # TODO: Implement the backward pass for the fully-connected net. Store the #
-        # loss in the loss variable and gradients in the grads dictionary. Compute #
-        # data loss using softmax, and make sure that grads[k] holds the gradients #
-        # for self.params[k]. Don't forget to add L2 regularization!               #
+        # TODO                                                                     #
+        # Implement the backward pass for the fully-connected net. Store the loss  #
+        # in the loss variable and gradients in the grads dictionary. Compute data #
+        # loss using softmax, and make sure that grads[k] holds the gradients for  #
+        # self.params[k]. Don't forget to add L2 regularization!                   #
         #                                                                          #
-        # When using batch/layer normalization, you don't need to regularize the scale   #
-        # and shift parameters.                                                    #
+        # When using batch/layer normalization, you don't need to regularize the   #
+        # scale and shift parameters.                                              #
         #                                                                          #
         # NOTE: To ensure that your implementation matches ours and you pass the   #
         # automated tests, make sure that your L2 regularization includes a factor #
         # of 0.5 to simplify the expression for the gradient.                      #
         ############################################################################
-        pass
+        loss, dout = softmax_loss(scores, y)
+        for idx in range(self.num_layers - 1, -1, -1):
+            idx_str = str(idx + 1)
+            loss += 0.5 * self.reg * np.sum(self.params['W' + idx_str] ** 2)
+            if idx == self.num_layers - 1:
+                dout, dW, db = affine_backward(dout, cache[idx])
+            else:
+                dout, dW, db = affine_relu_backward(dout, cache[idx])
+            grads['W' + idx_str] = dW + self.reg * self.params['W' + idx_str]
+            grads['b' + idx_str] = db
         ############################################################################
         #                             END OF YOUR CODE                             #
         ############################################################################
