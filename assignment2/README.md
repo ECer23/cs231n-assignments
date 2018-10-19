@@ -19,7 +19,7 @@ are as follows:
 ### Roadmap
 
 - [x] ~~Q1: Fully-connected Neural Network~~ 2018/10/18
-- [ ] Q2: Batch Normalization
+- [x] ~~Q2: Batch Normalization~~ 2018/10/19
 - [ ] Q3: Dropout
 - [ ] Q4: Convolutional Networks
 - [ ] Q5: PyTorch / TensorFlow on CIFAR-10

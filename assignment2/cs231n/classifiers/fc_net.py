@@ -56,7 +56,6 @@ class TwoLayerNet(object):
         #                             END OF YOUR CODE                             #
         ############################################################################
 
-
     def loss(self, X, y=None):
         """
         Compute loss and gradient for a minibatch of data.
@@ -184,11 +183,15 @@ class FullyConnectedNet(object):
         # parameters should be initialized to zeros.                               #
         ############################################################################
         for idx in range(self.num_layers):
-            idx_str = str(idx + 1)
+            idx_str = str(idx+1)
             in_channels = self.channels[idx]
             out_channels = self.channels[idx + 1]
             self.params['W' + idx_str] = weight_scale * np.random.randn(in_channels, out_channels)
             self.params['b' + idx_str] = np.zeros(out_channels)
+            if self.normalization != None:  # batchnorm or layernorm
+                if idx != self.num_layers - 1:  # exclude output layer
+                    self.params['gamma' + idx_str] = np.ones(out_channels)
+                    self.params['beta' + idx_str] = np.zeros(out_channels)
         ############################################################################
         #                             END OF YOUR CODE                             #
         ############################################################################
@@ -208,15 +211,14 @@ class FullyConnectedNet(object):
         # of the first batch normalization layer, self.bn_params[1] to the forward
         # pass of the second batch normalization layer, etc.
         self.bn_params = []
-        if self.normalization=='batchnorm':
+        if self.normalization == 'batchnorm':
             self.bn_params = [{'mode': 'train'} for i in range(self.num_layers - 1)]
-        if self.normalization=='layernorm':
-            self.bn_params = [{} for i in range(self.num_layers - 1)]
+        if self.normalization == 'layernorm':
+            self.ln_params = [{} for i in range(self.num_layers - 1)]
 
         # Cast all parameters to the correct datatype
         for k, v in self.params.items():
             self.params[k] = v.astype(dtype)
-
 
     def loss(self, X, y=None):
         """
@@ -231,9 +233,12 @@ class FullyConnectedNet(object):
         # behave differently during training and testing.
         if self.use_dropout:
             self.dropout_param['mode'] = mode
-        if self.normalization=='batchnorm':
+        if self.normalization == 'batchnorm':
             for bn_param in self.bn_params:
                 bn_param['mode'] = mode
+        elif self.normalization == 'layernorm':
+            for ln_param in self.ln_params:
+                ln_param['mode'] = mode
         scores = None
         ############################################################################
         # TODO                                                                     #
@@ -251,12 +256,21 @@ class FullyConnectedNet(object):
         cache = []
         inputs = X
         for idx in range(self.num_layers):
-            W = self.params['W' + str(idx + 1)]
-            b = self.params['b' + str(idx + 1)]
+            W = self.params['W' + str(idx+1)]
+            b = self.params['b' + str(idx+1)]
             if idx == self.num_layers - 1:  # output layer need no activation
                 scores, cache_layer = affine_forward(inputs, W, b)
             else:
-                outputs, cache_layer = affine_relu_forward(inputs, W, b)
+                if self.normalization == 'batchnorm':
+                    gamma = self.params['gamma' + str(idx+1)]
+                    beta = self.params['beta' + str(idx+1)]
+                    outputs, cache_layer = affine_bn_relu_forward(inputs, W, b, gamma, beta, self.bn_params[idx])
+                elif self.normalization == 'layernorm':
+                    gamma = self.params['gamma' + str(idx+1)]
+                    beta = self.params['beta' + str(idx+1)]
+                    outputs, cache_layer = affine_ln_relu_forward(inputs, W, b, gamma, beta, self.ln_params[idx])
+                else:
+                    outputs, cache_layer = affine_relu_forward(inputs, W, b)
                 inputs = outputs
             cache.append(cache_layer)
         ############################################################################
@@ -284,12 +298,21 @@ class FullyConnectedNet(object):
         ############################################################################
         loss, dout = softmax_loss(scores, y)
         for idx in range(self.num_layers - 1, -1, -1):
-            idx_str = str(idx + 1)
+            idx_str = str(idx+1)
             loss += 0.5 * self.reg * np.sum(self.params['W' + idx_str] ** 2)
             if idx == self.num_layers - 1:
                 dout, dW, db = affine_backward(dout, cache[idx])
             else:
-                dout, dW, db = affine_relu_backward(dout, cache[idx])
+                if self.normalization == 'batchnorm':
+                    dout, dW, db, dgamma, dbeta = affine_bn_relu_backward(dout, cache[idx])
+                    grads['gamma' + idx_str] = dgamma
+                    grads['beta' + idx_str] = dbeta
+                elif self.normalization == 'layernorm':
+                    dout, dW, db, dgamma, dbeta = affine_ln_relu_backward(dout, cache[idx])
+                    grads['gamma' + idx_str] = dgamma
+                    grads['beta' + idx_str] = dbeta
+                else:
+                    dout, dW, db = affine_relu_backward(dout, cache[idx])
             grads['W' + idx_str] = dW + self.reg * self.params['W' + idx_str]
             grads['b' + idx_str] = db
         ############################################################################

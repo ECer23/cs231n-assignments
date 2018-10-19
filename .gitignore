@@ -1,5 +1,7 @@
 **/.vscode
 **/.git
+**/*.backup
 *.pyc
 **/__pycache__
 **/.ipynb_checkpoints
+**/datasets/*
