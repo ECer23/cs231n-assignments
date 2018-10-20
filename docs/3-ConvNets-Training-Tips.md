@@ -44,6 +44,18 @@ In practice, if you are not concerned with explicit feature selection, L2 regula
 
 ### Dropout
 
+Details of implementation could be seen in my blog [Dropout Notes](http://ecr23.me/vision/dropout/)
+
+The key idea is to randomly drop units (along with their connections) from the neural network during training. In analogy, Dropout is randomly dividing K∗N neurons to K groups, each group is a thinned network with N neurons. Compared with training the K∗N-neurons networks, training the N-neurons networks K passes are more robust to overfitting.
+
+During training time, we just generate a mask to randomly "filter out" some neurons. In inference time, the expected output should be p (for example, p=0.5) times of original output (we can not inference for K passes and take average for efficiency's sake), so we must
+* multiply `p` to dropout layer output in inference time
+* or divide dropout layer output by `p` in training time
+
+Usually the latter one is perferred, and it's called "inverted dropout". Dropout could avoid quickly overfitting to some extent. But too much dropout regularization could make the network underfit. For the best-perfromed model, it usually outperforms 2%-3% validation accuracy than base model.
+
+![](https://raw.githubusercontent.com/stdcoutzyx/Blogs/master/blogs/imgs/n7-2.png)
+
 ### Bias regularization ?
 
 We typically penalize only the weights of the affine transformation at each layer and leaves the biases unregularized. There're 2 reasons to do so:
