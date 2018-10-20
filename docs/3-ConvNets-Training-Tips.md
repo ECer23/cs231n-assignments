@@ -1,5 +1,17 @@
 # ConvNets Training Tips
 
+## Table Of Contents
+
+* [Data](#data)
+    * [Preprocessing](#preprocessing)
+    * [Batch normalization](#batch-normalization)
+* [Regularization](#regularization)
+    * [L1 and L2 regularization](#l1-and-l2-regularization)
+    * [Dropout](#dropout)
+    * [Bias regularization](#bias-regularization)
+* [References](#references)
+
+
 ## Data
 
 Proper data setting before and during training could heavily boost training process, as we handily remove some undesired properties of data distribution while keep the features we want.
@@ -14,7 +26,7 @@ There are three common forms of data preprocessing a data matrix X
 
 In practice, PCA/Whitening and normalization are not used with Convolutional Networks. However, it is very important to zero-center the data. Because in principal, the linear transformation performed by PCA can be performed just as well by by the input layer weights of the neural network, so it isn't strictly speaking necessary. And in case of images, the relative scales of pixels are already approximately equal (and in range from 0 to 255), so it is not strictly necessary to perform this additional preprocessing step.
 
-### Batch Normalization
+### Batch normalization
 
 The most important data processing used in training is batch normalization. It's highly recommended to read the original paper [here](https://arxiv.org/abs/1502.03167). The motivation of BN is called internal covariate shift. In human's words, data distribution will change during training, while we want to control the distribution more "normal" or "Gaussian", which could release some the weights initialization's efforts. So the straightforward way is to "make it normal".
 
@@ -56,7 +68,7 @@ Usually the latter one is perferred, and it's called "inverted dropout". Dropout
 
 ![](https://raw.githubusercontent.com/stdcoutzyx/Blogs/master/blogs/imgs/n7-2.png)
 
-### Bias regularization ?
+### Bias regularization
 
 We typically penalize only the weights of the affine transformation at each layer and leaves the biases unregularized. There're 2 reasons to do so:
 * Biases usually require less data to ﬁt accurately than the weights, which means they don't induce too much variance even if they're unregularized.

@@ -1,5 +1,19 @@
 # Convolutional Nerual Network
 
+## Table Of Conents
+
+* [Architecture Design](#architecture-design)
+    * [Why choose ConvNet over regular NN](#why-choose-convnet-over-regular-nn)
+    * [Convolutional layer](#convolutional-layer)
+    * [Pooling layer](#pooling-layer)
+    * [Fully connected layer](#fully-connected-layer)
+    * [Activation layer](#activation-layer)
+* [Case Study](#case-study)
+    * [VGG](#vgg)
+    * [ResNet](#resnet)
+* [References](#references)
+
+
 ## Architecture Design
 
 ### Why choose ConvNet over regular NN
@@ -18,7 +32,25 @@ The Convolutional layer is the core building block of a Convolutional Network th
 
 **Parameter sharing**. Parameter sharing scheme is used in Convolutional Layers to control the number of parameters. Parameter sharing scheme is used in Convolutional Layers to control the number of parameters. We assume that if one feature is useful to compute at some spatial position (x,y), then it should also be useful to compute at a different position (x2,y2). In other words, denoting a single 2-dimensional slice of depth as a depth slice, and weights for a depth slice are all the same.
 
-### Activation functions comparisons
+### Pooling layer
+
+Pooling layer sometimes is also called pooling operation. Recall that the backward pass for a MAX(x,y) operation has a simple interpretation as only routing the gradient to the input that had the highest value in the forward pass. Hence, during the forward pass of a pooling layer it is common to keep track of the index of the max activation (sometimes also called the switches ) so that gradient routing is eQcient during backpropagation.
+
+```python
+# selected indexes are passed gradient
+max_mask = (x[..., i1:i2, j1:j2] == out[..., i, j].reshape(N, C, 1, 1))
+dx[..., i1:i2, j1:j2] += max_mask * dout[..., i, j].reshape(N, C, 1, 1)
+```
+
+Many people dislike the pooling operation and think that we can get away without it. For example, [Striving for Simplicity: The All Convolutional Net](http://arxiv.org/abs/1412.6806) proposes to discard the pooling layer in favor of architecture that only consists of repeated convolutional layers. Later of this note, we'll introduce [ResNet](#resnet), one of the most popular backbone models for computer vision tasks, which also reduces the use of pooling layer. And in [Dynamic Routing Between Capsules](https://arxiv.org/abs/1710.09829) by Sara Sabour et al., the authors also point out that pooling layer is a very rough routing method. You can read the [Dynamic Routing Between Capsules Notes](http://ecr23.me/vision/capsule/) I wrote before to know more about capsules.
+
+### Fully connected layer
+
+Fully connected layer is thought to be the most time/memory consuming layer in ConvNets, as there're no parameter sharing like tricks. Once the dimension increases, the memory/time consumes grows heavily.
+
+Recently, there're several attemps to replace FC layer by CONV layer as  the only difference between FC and CONV layers is that the neurons in the CONV layer are connected only to a local region in the input, and that many of the neurons in a CONV volume share parameters.
+
+### Activation layer
 
 The general advice is to use ReLU or Leaky ReLU.
 
@@ -32,6 +64,12 @@ The general advice is to use ReLU or Leaky ReLU.
     * (-) ReLU units can be fragile if the inputs are less than zero.
 * **Leaky ReLU**
     * (+) Fix ReLU's problem when inputs are < 0. It also gives a very small activation when inputs are less than zero.
+
+## Case Study
+
+### VGG
+
+### ResNet
 
 ## References
 
