@@ -1,3 +1,5 @@
+# ConvNets Training Tips
+
 ## Data
 
 Proper data setting before and during training could heavily boost training process, as we handily remove some undesired properties of data distribution while keep the features we want.

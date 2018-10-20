@@ -1,3 +1,5 @@
+# Classifier
+
 ## Table Of Contents
 
 * [kNN Classifier](https://github.com/ECer23/cs231n.assignments/wiki/Classifier#knn-classifier)

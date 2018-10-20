@@ -1,4 +1,4 @@
-In this chapter, I'll introduce the how Convolutional Neural Networks (ConvNet) works, and some general ideas behind it that we can learn from.
+# Convolutional Nerual Network
 
 ## Architecture Design
 
