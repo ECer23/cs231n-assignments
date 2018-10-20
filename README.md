@@ -2,13 +2,13 @@
 
 My solutions and notes for [Stanford CS231n, Spring 2018](http://cs231n.stanford.edu/) assignments. Details like assignments description, enviroment setup of each assignment could be seen in [CS231n GitHub Pages](http://cs231n.github.io/).
 
-## Contents
+## Solutions
 
 * [Assignment 1](https://github.com/ECer23/cs231n.assignments/tree/master/assignment1) Complete 100%
 * [Assignment 2](https://github.com/ECer23/cs231n.assignments/tree/master/assignment2) Complete 50%
 * [Assignment 3](https://github.com/ECer23/cs231n.assignments/tree/master/assignment3) Complete 0%
 
-## Wiki
+## Notes
 
 Wiki pages of this repository are used to take notes of important ideas behind the assignments. And I'll explain some difficult parts I met when doing these assigments.
 
