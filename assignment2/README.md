@@ -20,7 +20,7 @@ are as follows:
 
 - [x] ~~Q1: Fully-connected Neural Network~~ 2018/10/18
 - [x] ~~Q2: Batch Normalization~~ 2018/10/19
-- [ ] Q3: Dropout
+- [x] ~~Q3: Dropout~~ 2018/10/20
 - [ ] Q4: Convolutional Networks
 - [ ] Q5: PyTorch / TensorFlow on CIFAR-10
 
