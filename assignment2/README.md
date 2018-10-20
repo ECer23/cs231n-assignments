@@ -21,7 +21,7 @@ are as follows:
 - [x] ~~Q1: Fully-connected Neural Network~~ 2018/10/18
 - [x] ~~Q2: Batch Normalization~~ 2018/10/19
 - [x] ~~Q3: Dropout~~ 2018/10/20
-- [ ] Q4: Convolutional Networks
+- [x] ~~Q4: Convolutional Networks~~ 2018/10/20
 - [ ] Q5: PyTorch / TensorFlow on CIFAR-10
 
 ### Q1: Fully-connected Neural Network (20 points)

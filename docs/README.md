@@ -1,6 +1,12 @@
 **IMPORTANT:** Please view documents on [Github Pages](http://ecr23.me/cs231n)
 
-## Contents
+## Solutions
+
+* [Assignment 1](https://github.com/ECer23/cs231n.assignments/tree/master/assignment1) Complete 100%
+* [Assignment 2](https://github.com/ECer23/cs231n.assignments/tree/master/assignment2) Complete 85%
+* [Assignment 3](https://github.com/ECer23/cs231n.assignments/tree/master/assignment3) Complete 0%
+
+## Notes
 
 * [1 - Classifier](1-Classifier) kNN, SVM, Softmax and basic Neural Network classifier.
 * [2 - Convolutional Neural Network](2-Convolutional-Neural-Network) ConvNets architecture design, fine tuning tips and vectorized implementation details.
