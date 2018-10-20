@@ -1,4 +1,4 @@
-# CS231n Assignments
+# Cs231n
 
 My solutions and notes for [Stanford CS231n, Spring 2018](http://cs231n.stanford.edu/) assignments. Details like assignments description, enviroment setup of each assignment could be seen in [CS231n GitHub Pages](http://cs231n.github.io/).
 
