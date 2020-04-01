@@ -1,4 +1,4 @@
-**IMPORTANT:** Please view documents on [Github Pages](http://ecr23.me/cs231n)
+**IMPORTANT:** Please view documents on [Github Pages](https://ecr23xx.github.io/cs231n)
 
 ## Solutions
 
