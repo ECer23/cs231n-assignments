@@ -10,7 +10,7 @@ My solutions and notes for [Stanford CS231n, Spring 2018](http://cs231n.stanford
 
 ## Notes
 
-* [0 - Introduction](http://ecr23.me/cs231n/) Motivation and plans of publishing my solutions to CS231n's assigments.
-* [1 - Classifier](http://ecr23.me/cs231n/1-Classifier) kNN, SVM, Softmax and basic Neural Network classifier.
-* [2 - Convolutional Neural Network](http://ecr23.me/cs231n/2-Convolutional-Neural-Network) ConvNets architecture design and vectorized implementation details.
-* [3 - ConvNets Training Tips](http://ecr23.me/cs231n/3-ConvNets-Training-Tips) ConvNets Training tips, including batch normalization, dropout and more.
+* [0 - Introduction](https://ecr23xx.github.io/cs231n/) Motivation and plans of publishing my solutions to CS231n's assigments.
+* [1 - Classifier](https://ecr23xx.github.io/cs231n/1-Classifier) kNN, SVM, Softmax and basic Neural Network classifier.
+* [2 - Convolutional Neural Network](https://ecr23xx.github.io/cs231n/2-Convolutional-Neural-Network) ConvNets architecture design and vectorized implementation details.
+* [3 - ConvNets Training Tips](https://ecr23xx.github.io/cs231n/3-ConvNets-Training-Tips) ConvNets Training tips, including batch normalization, dropout and more.
